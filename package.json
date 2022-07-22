@@ -1,0 +1,16 @@
+{
+  "name": "com.darktable.consolelog",
+  "version": "0.1.0",
+  "displayName": "Console Log",
+  "type": "tool",
+  "unity": "2021.3",
+  "keywords": [
+    "utilities"
+  ],
+  "author": {
+    "name": "Calvin Rien",
+    "email": "",
+    "url": ""
+  },
+  "description": "Show log messages and watch variables in Unity Canvases."
+}

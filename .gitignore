@@ -8,10 +8,17 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
-/[Mm]emoryCaptures/
+/[Uu]ser[Ss]ettings/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
+
+# MemoryCaptures can get excessive in size.
+# They also could contain extremely sensitive data
+/[Mm]emoryCaptures/
+
+# Recordings can get excessive in size
+/[Rr]ecordings/
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
@@ -53,8 +60,41 @@ sysinfo.txt
 
 # Builds
 *.apk
+*.aab
 *.unitypackage
+*.app
 
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Packed Addressables
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+
+# Temporary auto-generated Android Assets
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Files and Folders hidden from unity. https://docs.unity3d.com/Manual/SpecialFolders.html "Hidden Assets"
+**/*~
+
+# Annoying Mac Files
+.DS_Store
+
+# Hide junk in the _Attic
+**/_[aA]ttic/
+**/_[aA]ttic.meta
+
+# Oculus plugins for platforms we don't care about.
+**/Plugins/MacOSX.meta
+**/Plugins/MacOSX/
+**/Plugins/**/Win.meta
+**/Plugins/**/Win/
+**/Plugins/**/x86.meta
+**/Plugins/**/x86/
+
+# PDF file that everyone has easy access to.
+Assets/TextMesh Pro/Documentation/
+Assets/TextMesh Pro/Documentation.meta
+
+# JetBrains Rider configuration
+/.idea/

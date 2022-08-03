@@ -2,6 +2,13 @@
 # and leave all files detected as binary untouched.
 * -text
 
+*.cs        text eol=lf diff=csharp
+*.shader    text eol=lf
+*.cginc     text eol=lf
+*.hlsl      text eol=lf
+*.compute   text eol=lf
+*.meta      text eol=lf
+
 # base git lfs attributes to store binary files in lfs
 *.3[dD][sS] filter=lfs diff=lfs merge=lfs -text lockable
 *.7[zZ] filter=lfs diff=lfs merge=lfs -text lockable
@@ -15,8 +22,10 @@
 *.[bB][mM][pP] filter=lfs diff=lfs merge=lfs -text lockable
 *.[bB][zZ]2 filter=lfs diff=lfs merge=lfs -text lockable
 *.[cC]4[dD] filter=lfs diff=lfs merge=lfs -text lockable
+*.[dD][bB] filter=lfs diff=lfs merge=lfs -text lockable
 *.[dD][aA][eE] filter=lfs diff=lfs merge=lfs -text lockable
 *.[dD][aA][tT] filter=lfs diff=lfs merge=lfs -text lockable
+*.[dD][dD][sS] filter=lfs diff=lfs merge=lfs -text lockable
 *.[dD][lL][lL] filter=lfs diff=lfs merge=lfs -text lockable
 *.[dD][xX][fF] filter=lfs diff=lfs merge=lfs -text lockable
 *.[eE][pP][sS] filter=lfs diff=lfs merge=lfs -text lockable
@@ -82,3 +91,4 @@
 *.webm filter=lfs diff=lfs merge=lfs -text lockable
 *.webp filter=lfs diff=lfs merge=lfs -text lockable
 LightingData.asset filter=lfs diff=lfs merge=lfs -text lockable
+NavMesh.asset filter=lfs diff=lfs merge=lfs -text lockable

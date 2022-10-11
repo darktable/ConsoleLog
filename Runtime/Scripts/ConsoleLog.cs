@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ namespace ConsoleLog
 {
     public class ConsoleLog : MonoBehaviour
     {
+        private const float minScrollDelta = 0.0001f;
+        
         public static Color WarningColor { get; private set; }
         public static Color ErrorColor { get; private set; }
         public static Color ExceptionColor { get; private set; }
@@ -34,6 +37,8 @@ namespace ConsoleLog
         private Scrollbar verticalScrollbar;
         private float lastScrollY = 0;
         private float lastScrollSize = float.MinValue;
+        private float currentScrollY = 0;
+        private float currentScrollSize = float.MinValue;
 
         private void Awake()
         {
@@ -86,19 +91,22 @@ namespace ConsoleLog
 
             if (canvas.worldCamera == null)
             {
-            canvas.worldCamera = Camera.main;
-        }
+                canvas.worldCamera = Camera.main;
+            }
         }
 
-        private void Update()
+        private void LateUpdate()
         {
-            if (lastScrollSize == 1.0f && verticalScrollbar.size != lastScrollSize)
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (NearlyZero(lastScrollY) && lastScrollSize != currentScrollSize)
             {
-                // scrolling just started, move scrollbar down.
+                // determine if scrolling should be locked to the bottom or not
+                // (show new entries as they are added or leave current ones on screen.
                 verticalScrollbar.value = 0.0f;
             }
 
-            lastScrollSize = verticalScrollbar.size;
+            lastScrollSize = currentScrollSize;
+            lastScrollY = currentScrollY;
         }
 
         private void SubscribeEvents(bool subscribe = true)
@@ -126,6 +134,8 @@ namespace ConsoleLog
             logEntry.Set(msg);
 
             logEntryQueue.Enqueue(logEntry);
+            
+            UpdateScroll(verticalScrollbar.value);
         }
 
         private void OnClearLog()
@@ -138,8 +148,26 @@ namespace ConsoleLog
 
         private void OnVerticalScrollChanged(float value)
         {
-            // TODO: determine if scrolling should be locked to the bottom or not
-            // (show new entries as they are or leave current ones on screen.
+            if (value != 0.0f && NearlyZero(value))
+            {
+                verticalScrollbar.value = 0.0f;
+                return;
+            }
+            
+            UpdateScroll(value);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void UpdateScroll(float value)
+        {
+            currentScrollSize = verticalScrollbar.size;
+            currentScrollY = value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool NearlyZero(float value)
+        {
+            return Mathf.Abs(value) < minScrollDelta;
         }
 
 #if UNITY_EDITOR

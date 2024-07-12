@@ -56,12 +56,18 @@ namespace ConsoleLog
             ms = logMessage.milliseconds;
             m_logType = logMessage.type;
 
+            var message = logMessage.message;
+            if (message.Length > 8000) // TextMeshPro throws an exception if you try to render a very large string.
+            {
+                message = message.Substring(0, 8000);
+            }
+
 #if UNITY_EDITOR || DEBUG || DEVELOPMENT_BUILD
             (className, methodName) = LogMessage.GetClassAndMethodName(logMessage.stacktrace);
 
-            log.text = $"[{frame}:{ms:F2}][{className}.{methodName}]: {logMessage.message}";
+            log.text = $"[{frame}:{ms:F2}][{className}.{methodName}]: {message}";
 #else
-            log.text = $"[{frame}:{ms:F2}]: {logMessage.message}";
+            log.text = $"[{frame}:{ms:F2}]: {message}";
 #endif
 
             switch (m_logType)
